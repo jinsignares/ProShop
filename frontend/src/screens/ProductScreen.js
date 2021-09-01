@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { listProductDetails } from '../redux/actions/productActions'
 
 const ProductScreen = ({ history, match }) => {
-    const [qty, setQty] = useState(0)
+    const [qty, setQty] = useState(1)
     const dispatch = useDispatch()
     const productDetails = useSelector(state => state.productDetails)
     const { product: { image, name, rating, numReviews, price, description, countInStock }, loading, error } = productDetails
@@ -41,7 +41,7 @@ const ProductScreen = ({ history, match }) => {
                                 Price: ${price}
                             </ListGroup.Item>
                             <ListGroup.Item>
-                                Description: ${description}
+                                Description: {description}
                             </ListGroup.Item>
                         </ListGroup>
                     </Col>
