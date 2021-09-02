@@ -1,4 +1,4 @@
-import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_DETAILS_REQUEST } from '../actions/types'
+import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_DETAILS_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS } from '../actions/types'
 
 export const orderCreateReducer = (state = {}, action) => {
     const { type, payload } = action
@@ -24,7 +24,7 @@ export const orderCreateReducer = (state = {}, action) => {
     }
 }
 
-export const orderDetailsReducer = (state = { orderItems: [], shippingAddress: {} }, action) => {
+export const orderDetailsReducer = (state = { loading: true, orderItems: [], shippingAddress: {} }, action) => {
     const { type, payload } = action
 
     switch (type) {
@@ -33,12 +33,12 @@ export const orderDetailsReducer = (state = { orderItems: [], shippingAddress: {
                 ...state,
                 loading: true
             }
-        case ORDER_CREATE_SUCCESS:
+        case ORDER_DETAILS_SUCCESS:
             return {
                 loading: false,
                 order: payload
             }
-        case ORDER_CREATE_FAIL:
+        case ORDER_DETAILS_FAIL:
             return {
                 loading: false,
                 error: payload
