@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_PAYMENT_METHOD, CART_SAVE_SHIPPING_ADDRESS } from "../actions/types"
+import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_RESET, CART_SAVE_PAYMENT_METHOD, CART_SAVE_SHIPPING_ADDRESS } from "../actions/types"
 
 export const cartReducer = (state = { cartItems: [], shippingAddress: {} }, action) => {
     const { type, payload } = action
@@ -24,6 +24,10 @@ export const cartReducer = (state = { cartItems: [], shippingAddress: {} }, acti
             return {
                 ...state,
                 cartItems: state.cartItems.filter(x => x.product !== payload)
+            }
+        case CART_RESET:
+            return {
+                cartItems: []
             }
         case CART_SAVE_SHIPPING_ADDRESS:
             return {

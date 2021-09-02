@@ -6,14 +6,22 @@ import { listUsers } from '../redux/actions/userActions'
 import Message from "../components/Message"
 import Loader from '../components/Loader'
 
-const UserListScreen = () => {
+const UserListScreen = ({ history }) => {
     const dispatch = useDispatch()
 
     const userList = useSelector(state => state.userList)
     const { loading, error, users } = userList
 
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin
+
     useEffect(() => {
-        dispatch(listUsers())
+        if (userInfo && userInfo.isAdmin) {
+            dispatch(listUsers())
+        } else {
+            history.push('/login')
+        }
+
     }, [])
 
     const deleteHandler = (id) => {
@@ -40,7 +48,7 @@ const UserListScreen = () => {
                                 <td>{user._id}</td>
                                 <td>{user.name}</td>
                                 <td><a href={`mailto:${user.email}`}>{user.email}</a></td>
-                                <td>{user.isAdmin ? (
+                                <td style={{ justifyContent: 'center' }}>{user.isAdmin ? (
                                     <i className='fas fa-check' style={{ color: 'green' }} />
                                 ) : (
                                     <i className='fas fa-times' style={{ color: 'red' }} />
