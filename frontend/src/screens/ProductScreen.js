@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { listProductDetails, createProductReview } from '../redux/actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../redux/actions/types'
+import Meta from '../components/Meta'
 
 const ProductScreen = ({ history, match }) => {
     const [qty, setQty] = useState(1)
@@ -51,6 +52,7 @@ const ProductScreen = ({ history, match }) => {
             <Link className='btn btn-light my-3' to='/'>Go Back</Link>
             {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
                 <>
+                    <Meta title={product.name} />
                     <Row>
                         <Col md={6}>
                             <Image fluid src={product.image} alt={product.name} />
