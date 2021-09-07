@@ -9,7 +9,7 @@ import Message from '../components/Message'
 import { getOrderDetails, payOrder, deliverOrder } from "../redux/actions/orderActions"
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from "../redux/actions/types"
 
-const OrderScreen = ({ match }) => {
+const OrderScreen = ({ match, history }) => {
     const orderId = match.params.id
     const dispatch = useDispatch()
     const [sdkReady, setSdkReady] = useState(false)
@@ -24,9 +24,12 @@ const OrderScreen = ({ match }) => {
     const { loading: loadingPay, success: successPay } = orderPay
 
     const orderDeliver = useSelector(state => state.orderDeliver)
-    const { success: successDeliver } = orderDeliver
+    const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
     useEffect(() => {
+        if (!userInfo) {
+            history.push('/login')
+        }
         const addPayPalScript = async () => {
             const { data: clientId } = await axios.get('/api/config/paypal')
             const script = document.createElement('script')
@@ -161,7 +164,8 @@ const OrderScreen = ({ match }) => {
                                         )}
                                     </ListGroup.Item>
                                 )}
-                                {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                                {loadingDeliver && <Loader />}
+                                {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                                     <ListGroup.Item>
                                         <Button type='button' className='btn btn-block w-100' onClick={deliverHandler}>Mark As Delivered</Button>
                                     </ListGroup.Item>
