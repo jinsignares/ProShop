@@ -32,12 +32,12 @@ const ProfileScreen = ({ history }) => {
         if (!userInfo) {
             history.push('/login')
         } else {
-            if (!user.name) {
+            if (!userInfo.name) {
                 dispatch(getUserDetails('profile'))
                 dispatch(listMyOrders())
             } else {
-                setName(user.name)
-                setEmail(user.email)
+                setName(userInfo.name)
+                setEmail(userInfo.email)
             }
         }
     }, [dispatch, history, userInfo, user])
