@@ -6,6 +6,7 @@ import Message from "../components/Message"
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../redux/actions/userActions'
 import { listMyOrders } from "../redux/actions/orderActions"
+import { USER_UPDATE_PROFILE_RESET } from '../redux/actions/types'
 
 const ProfileScreen = ({ history }) => {
     const [name, setName] = useState('')
@@ -32,7 +33,8 @@ const ProfileScreen = ({ history }) => {
         if (!userInfo) {
             history.push('/login')
         } else {
-            if (!userInfo.name) {
+            if (!user || !userInfo.name || success) {
+                dispatch({ type: USER_UPDATE_PROFILE_RESET })
                 dispatch(getUserDetails('profile'))
                 dispatch(listMyOrders())
             } else {
@@ -40,7 +42,7 @@ const ProfileScreen = ({ history }) => {
                 setEmail(userInfo.email)
             }
         }
-    }, [dispatch, history, userInfo, user])
+    }, [dispatch, history, userInfo, user, success])
 
     const submitHandler = (e) => {
         e.preventDefault()
