@@ -14,7 +14,7 @@ const SearchBox = ({ history }) => {
     }
 
     return (
-        <Form inline onSubmit={submitHandler}>
+        <Form style={{ alignItems: 'center' }} inline={true} onSubmit={submitHandler}>
             <Form.Control type='text' name='q' onChange={(e) => setKeyword(e.target.value)} placeholder='Search Products...' className='mr-sm-2 ml-sm-5' />
             <Button type='submit' variant='outline-success'>Search</Button>
         </Form>
